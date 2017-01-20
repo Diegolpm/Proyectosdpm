@@ -1,0 +1,24 @@
+.aviso {
+  background-color: red;
+}
+
+div {
+	margin-left: 300px;
+}
+
+/*
+div.ordenar {
+	animation-name: example;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
+
+@keyframes example {
+    0%   { left:0px; top:0px;}
+    25%  { left:200px; top:0px;}
+    50%  { left:200px; top:200px;}
+    75%  { left:0px; top:200px;}
+    100% { left:0px; top:0px;}
+}
+
+*/

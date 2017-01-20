@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>El Comercio</title>
+	<meta charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script><!-- Framework Angular 2, me permite usar la variable $scope y poder manejar la Vista-Controlador, asi como las animaciones que muestro en el front end -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!--Framework Bootstrap para manejar los estilos -->
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+ 
+<script type="text/javascript">
+               
+    var app = angular.module('AppDesafio', []); // instancia del angular
+ 
+	app.controller('DesafioCtrl', function ($scope) {  //instancio el controlador "DesafioCtrl" definido en el div
+ 
+ 	  //$scope = variable del angular que me permitira que los datos que manejo en los controladores pasen a las vistas, y viceversa.
+	  $scope.numeroRepetido = true;  //definimos la variable booleana numeroRepetido
+	  $scope.aviso = ""; //definimos la variable aviso
+	  $scope.numeros = []; //definimos el arreglo numeros
+ 
+	  $scope.agregarNumero = function() {//funcion para validar si agregamos numeros al arreglo
+	    $scope.aviso = "";
+	    if (NoEsNumeroRepetido($scope.NumeroIngresado)) { //condicion para validar si el numero existe
+	      $scope.numeros.push($scope.NumeroIngresado); //agregamos el numero agregado al arreglo mediante push
+	    } else {
+	      $scope.aviso = "aviso"; //si es falso pintara el anuncio 
+	    }
+	  }                           
+ 
+	  $scope.ordenar = function() { //funcion para ordenar el arreglo insertado	 
+	    $scope.numeros.sort(Ascendente); //dentro de la propuedad sort que solo ordena alfabeticamente se agrego
+	    //como parametro una funcion de comparacion
+	  }
+
+	  function Ascendente(elem1, elem2) {// Esta función devuelve un número negativo si el primer elemento debe ordenarse antes que el segundo, cero si ambos elementos tienen igual orden, o un número positivo si el segundo elemento debe ordenarse antes que el primero
+	  	return elem1-elem2;
+	  }
+ 
+	  $scope.reset = function() { //funcion para resetear el arreglo
+	    $scope.numeros = []; //declaramos el arreglo sin valores 
+	    $scope.numeroRepetido = false; //declaramos numeroRepetido como false
+	    $scope.aviso = ""; //declaramos aviso vacio
+	  }
+ 
+	  function NoEsNumeroRepetido(value) { //mediante esta funcion validamos si el valor que agregamos esta en el arreglo mediante indexof que me devuelve true si no lo encuentra(-1) o si encuentra ese el indexof me enviara uno diferente
+	    return $scope.numeros.indexOf(value) == -1;
+	  }
+ 
+});
+</script>
+ 
+<body>
+ 
+<div ng-app="AppDesafio" ng-controller="DesafioCtrl"> <!-- se añade y define la propiedad del angular para que pueda controlar todo la seccion del div -->
+ 
+  <h1>Desafío El Comercio</h1>
+ 
+  <div id="descripcion">
+    <h3>Enunciado:</h3>
+    <p>Se tienen los siguientes requerimientos:</p>
+    <ol>
+      <li>Crear una interfaz gráfica que permita:
+        <ul>
+          <li>
+            Ingresar un conjunto indeterminado de números enteros en cualquier orden.
+          </li>
+          <li>
+            <span class="{{aviso}}"> <!--propiedad del angular para acceder a la vista mediante la variable aviso(controlador)-->
+                Los números ingresados no deben repetirse.
+              </span>
+          </li>
+        </ul>
+      </li>
+      <li>Una vez ingresado el conjunto de números:</li>
+      <ul>
+        <li>
+          Generar el proceso de ordenamiento ascendente del conjunto.
+        </li>
+        <li>
+         Generar la animación visual de dicho proceso.
+        </li>
+      </ul>
+    </ol>
+  </div>
+ 
+  <div id="solucion">
+    <h3>Solución</h3>
+    <div class="numeros">Números a ordenar: {{numeros.length}}</div> <!--cuenta el numero de caracteres del arreglo -->
+    
+    <ul>
+    <div class="ordenar">
+      <li ng-repeat="numero in numeros" ng-animate="'animacion'">
+        {{numero}} <!--propiedad del angular para acceder a la vista mediante la variable numero(controlador) -->
+      </li>
+      </div>
+    </ul>
+
+    <form ng-submit="agregarNumero()">
+      <input type="number" ng-model="NumeroIngresado" required>
+      <input class="btn-primary" type="submit" value="agregarNumero">
+    </form>
+    <br>
+    <button ng-click="reset()">Resetear</button>
+    <button ng-click="ordenar()">Ordenar</button>
+  </div>
+ 
+</div>
+ 
+</body>
+</html>
